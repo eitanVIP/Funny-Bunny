@@ -1,0 +1,444 @@
+fileFormatVersion: 2
+guid: cdcf0c68287919142930bf837b6f5637
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: Mochi_Frame_0
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.20833334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 137
+      width: 29
+      height: 24
+    spriteID: f787d6ec3a0000443bfce5b916f18481
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 137}
+  - name: Mochi_Frame_1
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.19999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 38
+      width: 29
+      height: 25
+    spriteID: 8dfa998e0e1eaa248b4b71ac2656c507
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 38}
+  - name: Mochi_Frame_2
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.1923077}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 29
+      height: 26
+    spriteID: a4e141254931fd74cae7ec12fc8edd6d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Mochi_Frame_3
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.19999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 71
+      width: 29
+      height: 25
+    spriteID: b128c743ca08afb44b92fbac26a2b465
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 71}
+  - name: Mochi_Frame_4
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.20833334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 169
+      width: 29
+      height: 24
+    spriteID: e0402d046f6a18b47a96dcd6a8fea1d9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 169}
+  - name: Mochi_Frame_5
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.20833334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 201
+      width: 29
+      height: 24
+    spriteID: f480ef8de4e0cca428f12cf40ca65321
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 201}
+  - name: Mochi_Frame_6
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.19999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 104
+      width: 29
+      height: 25
+    spriteID: 727a96cdae9005c4eadeff4c26952fdb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 104}
+  - name: Mochi_Frame_7
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 41
+      y: 4
+      width: 29
+      height: 24
+    spriteID: 3445279029ac00345a9ac26adeb36c49
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 41, y: 4}
+  - name: Mochi_Frame_8
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.22727273}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 41
+      y: 68
+      width: 29
+      height: 22
+    spriteID: 485e5c61be3ce904fa80e1362d12f74a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 41, y: 68}
+  - name: Mochi_Frame_9
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.2916667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 41
+      y: 36
+      width: 29
+      height: 24
+    spriteID: e966ce4eafea8884e9b660f710550cc8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 41, y: 36}
+  - name: Mochi_Frame_10
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.22727273}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 41
+      y: 98
+      width: 29
+      height: 22
+    spriteID: b8b5bbf3b1310d347831deb852e3ba1d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 41, y: 98}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: 840872764
+    name: Mochi
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Mochi_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 24
+      spriteId: f787d6ec3a0000443bfce5b916f18481
+    - name: Mochi_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 25
+      spriteId: 8dfa998e0e1eaa248b4b71ac2656c507
+    - name: Mochi_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 26
+      spriteId: a4e141254931fd74cae7ec12fc8edd6d
+    - name: Mochi_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 25
+      spriteId: b128c743ca08afb44b92fbac26a2b465
+    - name: Mochi_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 24
+      spriteId: e0402d046f6a18b47a96dcd6a8fea1d9
+    - name: Mochi_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 24
+      spriteId: f480ef8de4e0cca428f12cf40ca65321
+    - name: Mochi_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 25
+      spriteId: 727a96cdae9005c4eadeff4c26952fdb
+    - name: Mochi_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 1
+        y: 6
+        width: 29
+        height: 24
+      spriteId: 3445279029ac00345a9ac26adeb36c49
+    - name: Mochi_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 22
+      spriteId: 485e5c61be3ce904fa80e1362d12f74a
+    - name: Mochi_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 1
+        y: 7
+        width: 29
+        height: 24
+      spriteId: e966ce4eafea8884e9b660f710550cc8
+    - name: Mochi_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 1
+        y: 5
+        width: 29
+        height: 22
+      spriteId: b8b5bbf3b1310d347831deb852e3ba1d
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 32, y: 32}
