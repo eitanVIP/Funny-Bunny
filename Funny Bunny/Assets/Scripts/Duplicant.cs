@@ -5,6 +5,7 @@ using UnityEngine;
 public class Duplicant : MonoBehaviour
 {
     [SerializeField] bool Gravity = true;
+    [HideInInspector] public float g = 2;
 
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -35,7 +36,7 @@ public class Duplicant : MonoBehaviour
         if (Input.touchCount == 0 && !Input.GetMouseButton(0))
         {
             GetComponent<HingeJoint2D>().enabled = false;
-            GetComponent<Rigidbody2D>().gravityScale = Gravity ? 2 : 0;
+            GetComponent<Rigidbody2D>().gravityScale = Gravity ? g : 0;
         }
     }
 }

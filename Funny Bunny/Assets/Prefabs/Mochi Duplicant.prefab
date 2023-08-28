@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -2609043755884403338}
   m_Layer: 7
   m_Name: Mochi Duplicant
-  m_TagString: Untagged
+  m_TagString: Clone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gravity: 1
+  g: 2
 --- !u!114 &3233306734331849329
 MonoBehaviour:
   m_ObjectHideFlags: 0

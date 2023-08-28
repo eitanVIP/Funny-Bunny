@@ -108,7 +108,7 @@ public class Manager : MonoBehaviour
         if (!GameObject.Find("dupsHolder"))
             return;
 
-        GameObject g = Instantiate(mochiPrefab, GameObject.FindGameObjectWithTag("Player").transform.position - Vector3.up * 0.25f, Quaternion.identity);
+        GameObject g = Instantiate(mochiPrefab, GameObject.FindWithTag("Player").transform.position - GameObject.FindWithTag("Player").transform.up * 0.25f, Quaternion.identity);
         g.transform.parent = GameObject.Find("dupsHolder").transform;
 
         Uses++;

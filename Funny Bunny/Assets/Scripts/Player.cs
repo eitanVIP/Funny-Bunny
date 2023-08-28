@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
 
         Flip();
 
-        if (transform.position.y <= -50)
+        if (transform.position.y <= -50 || transform.position.y >= 50)
         {
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
         GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.1f);
         if (IsGrounded())
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower * transform.up.y);
     }
 
     bool IsGrounded()
@@ -100,14 +100,27 @@ public class Player : MonoBehaviour
     {
         if (!GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
             return;
-
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if(rb.gravityScale > 0)
         {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
         }
+        else
+        {
+            if (!isFacingRight && horizontal < 0f || isFacingRight && horizontal > 0f)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
+        }
+        
     }
     #endregion
 
