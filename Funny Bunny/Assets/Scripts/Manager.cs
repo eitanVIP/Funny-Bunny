@@ -9,37 +9,56 @@ using TMPro;
 public class Manager : MonoBehaviour
 {
     [SerializeField] GameObject mochiPrefab;
-    TextMeshProUGUI UsesText;
+    [SerializeField] int[] perfectUseCounts;
+    [SerializeField] float finishSliderTime;
+    [SerializeField] float nonMovableAreaDistThreshold;
 
     GameObject MenuG;
     GameObject settingsMenu;
+    TextMeshProUGUI UsesText;
     [HideInInspector] public GameObject gameUI;
+    [HideInInspector] public bool gameStoped = false;
 
     Transform Touch;
     Transform BG;
 
-    [SerializeField] int[] perfectUseCounts;
-    [SerializeField] float finishSliderTime;
     int perfectUseCount;
     int Uses = 0;
+
     float fpsTimer = 0;
     float highestFPS = 0;
     float highestFPSTimer = 0;
-    [HideInInspector] public bool gameStoped = false;
 
     void Start()
     {
         Camera.main.aspect = 20 / 9f;
 
-        for(int i = 0; i < perfectUseCounts.Length; i++)
+        getObjects();
+        checkForUseKeys();
+
+        if (Application.platform != RuntimePlatform.Android)
         {
-            if(!PlayerPrefs.HasKey($"PerfectUses{i + 1}"))
-                PlayerPrefs.SetInt($"PerfectUses{i + 1}", perfectUseCounts[i]);
-
-            if (!PlayerPrefs.HasKey($"Uses{i + 1}"))
-                PlayerPrefs.SetInt($"Uses{i + 1}", 2147483640);
+            //gameUI.GetComponent<RectTransform>().anchoredPosition = Vector2.one * 3000;
+            //GameObject.FindWithTag("NonMovableArea").SetActive(false);
         }
+        else
+            GameObject.Find("Buttons").SetActive(false);
 
+        BG.position = Vector3.up * (14.72f - 4 * (SceneManager.GetActiveScene().buildIndex - 2));
+    }
+
+    void Update()
+    {
+        moveTouch();
+        fpsText();
+        checkForNonMovableArea();
+
+        if (Input.GetKeyDown(KeyCode.C) && gameUI.activeInHierarchy)
+            Duplicate();
+    }
+
+    void getObjects()
+    {
         Touch = GameObject.FindWithTag("Touch").transform;
         BG = GameObject.Find("BG").transform;
         UsesText = GameObject.Find("DupsUsed").GetComponent<TextMeshProUGUI>();
@@ -47,51 +66,43 @@ public class Manager : MonoBehaviour
         settingsMenu = GameObject.FindWithTag("settingsMenu");
         gameUI = GameObject.FindWithTag("gameUI");
 
-        if (Application.platform != RuntimePlatform.Android)
-        {
-            gameUI.GetComponent<RectTransform>().anchoredPosition = Vector2.one * 3000;
-            GameObject.FindWithTag("NonMovableArea").SetActive(false);
-        }
-        else
-            GameObject.Find("Buttons").SetActive(false);
-
         MenuG.SetActive(false);
         settingsMenu.GetComponent<CanvasGroup>().alpha = 0;
-
-        perfectUseCount = perfectUseCounts[SceneManager.GetActiveScene().buildIndex - 2];
-
-        UsesText.text = $"{Uses}/{perfectUseCount}";
-
-        BG.position = Vector3.up * (14.72f - 4 * (SceneManager.GetActiveScene().buildIndex - 2));
     }
 
-    void Update()
+    void checkForUseKeys()
+    {
+        for (int i = 0; i < perfectUseCounts.Length; i++)
+        {
+            if (!PlayerPrefs.HasKey($"PerfectUses{i + 1}"))
+                PlayerPrefs.SetInt($"PerfectUses{i + 1}", perfectUseCounts[i]);
+
+            if (!PlayerPrefs.HasKey($"Uses{i + 1}"))
+                PlayerPrefs.SetInt($"Uses{i + 1}", 2147483640);
+        }
+
+        perfectUseCount = perfectUseCounts[SceneManager.GetActiveScene().buildIndex - 2];
+        UsesText.text = $"{Uses}/{perfectUseCount}";
+    }
+
+    void moveTouch()
     {
         if (Input.touchCount > 0)
             Touch.position = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
         if (Input.GetMouseButton(0))
             Touch.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetKeyDown(KeyCode.C) && gameUI.activeInHierarchy)
-            Duplicate();
+    }
 
-            Collider2D[] colliders =  Physics2D.OverlapCircleAll(Touch.position, 0.25f);
-
-        bool inNonMovableArea = false;
-
-        foreach(Collider2D collider in colliders)
-            if(collider.CompareTag("NonMovableArea"))
-                inNonMovableArea = true;
-        
-        Touch.GetComponent<CircleCollider2D>().enabled = !inNonMovableArea;
-
+    void fpsText()
+    {
         fpsTimer += Time.deltaTime;
-        if(fpsTimer >= 0.5f)
+        if (fpsTimer >= 0.5f)
         {
             float fps = Mathf.Round(1 / Time.deltaTime / 10) * 10;
-            if(fps > highestFPS)
+            if (fps > highestFPS)
                 highestFPS = fps;
 
-            if(gameUI.activeInHierarchy)
+            if (gameUI.activeInHierarchy)
                 GameObject.Find("FPS").GetComponent<TextMeshProUGUI>().text = $"{fps}/{highestFPS}";
 
             fpsTimer = 0;
@@ -101,6 +112,38 @@ public class Manager : MonoBehaviour
                 highestFPS = 0;
                 highestFPSTimer = 0;
             }
+        }
+    }
+
+    void checkForNonMovableArea()
+    {
+        foreach (object o in FindObjectsByType<Duplicant>(FindObjectsSortMode.None))
+        {
+            Duplicant d = (Duplicant)o;
+            Vector2 joystickScreenPosition = gameUI.transform.GetChild(1).GetComponent<RectTransform>().anchoredPosition;
+            Vector2 joystickPosition = gameUI.transform.GetChild(1).GetComponent<RectTransform>().anchoredPosition / 100;
+            float Dist = Vector2.Distance((Vector2)d.transform.position, joystickPosition);
+            bool Enable = !(d.held && Dist < nonMovableAreaDistThreshold);
+            //Debug.Log($"Duplicant: {d.name}");
+            //Debug.Log($"Held: {d.held}");
+            //Debug.Log($"Position: {d.transform.position}");
+            //Debug.Log($"Joystick Screen Position: {joystickScreenPosition}");
+            //Debug.Log($"Joystick Position: {joystickPosition}");
+            //Debug.Log($"Distance to Joystick: {Dist}");
+            //Debug.Log($"Threshold: {nonMovableAreaDistThreshold}");
+            //Debug.Log($"Enabling: {Enable}");
+
+            string n = GameObject.FindWithTag("NonMovableArea").name;
+            char newChar = Enable ? '1' : '0';
+            char oldChar = n[n.Length - 1];
+            char[] NCA = n.ToCharArray();
+            NCA[n.Length - 1] = newChar;
+            n = new string(NCA);
+            //Debug.Log($"Name: {n}");
+            //Debug.Log($"Old Char : {oldChar}");
+            //Debug.Log($"New Char : {newChar}");
+            //Debug.Log($"New Name : {n}");
+            GameObject.FindWithTag("NonMovableArea").name = n;
         }
     }
 

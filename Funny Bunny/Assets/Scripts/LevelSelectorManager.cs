@@ -149,9 +149,15 @@ public class LevelSelectorManager : MonoBehaviour
             float perfectUses = PlayerPrefs.GetInt($"PerfectUses{i + 1}");
 
             if (uses != -1 && perfectUses != 0)
-                score += perfectUses / uses;
+            {
+                if (uses != 0)
+                    score += perfectUses / uses;
+                else
+                    score += 2;
+            }
 
         }
+
         float perfect = SceneManager.sceneCountInBuildSettings - 2;
         if (perfect > 0)
         {

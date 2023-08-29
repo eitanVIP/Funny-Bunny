@@ -465,7 +465,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5814205798685185801, guid: 39d2d0dd2540f904c8a0a9b4b0caa259, type: 3}
   m_PrefabInstance: {fileID: 918573054}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &1112569760
+--- !u!43 &969222480
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1130,7 +1130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2546327545185314482, guid: fc1796e88d10de148a8096d204c2c6aa, type: 3}
       propertyPath: m_Name
-      value: NonMovableArea
+      value: NonMovableArea1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -6,11 +6,13 @@ public class Duplicant : MonoBehaviour
 {
     [SerializeField] bool Gravity = true;
     [HideInInspector] public float g = 2;
+    [HideInInspector] public bool held = false;
 
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Touch"))
         {
+            held = true;
             GetComponent<HingeJoint2D>().enabled = true;
             GetComponent<HingeJoint2D>().connectedBody = GameObject.FindGameObjectWithTag("Touch").GetComponent<Rigidbody2D>();
             GetComponent<Rigidbody2D>().gravityScale = 0;
@@ -35,6 +37,23 @@ public class Duplicant : MonoBehaviour
     {
         if (Input.touchCount == 0 && !Input.GetMouseButton(0))
         {
+            held = false;
+            GetComponent<HingeJoint2D>().enabled = false;
+            GetComponent<Rigidbody2D>().gravityScale = Gravity ? g : 0;
+        }
+
+        Transform Touch = GameObject.FindWithTag("Touch").transform;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(Touch.position, 0.25f);
+
+        bool inNonMovableArea = false;
+
+        foreach (Collider2D collider in colliders)
+            if (collider.CompareTag("NonMovableArea") && collider.name[collider.name.Length - 1] == '1')
+                inNonMovableArea = true;
+
+        if (inNonMovableArea)
+        {
+            held = false;
             GetComponent<HingeJoint2D>().enabled = false;
             GetComponent<Rigidbody2D>().gravityScale = Gravity ? g : 0;
         }
