@@ -70,8 +70,10 @@ public class Player : MonoBehaviour
     #region Movement
     void FixedUpdate()
     {
-        if (GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy || horizontal == 0)
+        if (GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(0, 0);
     }
 
     public void tryJump()

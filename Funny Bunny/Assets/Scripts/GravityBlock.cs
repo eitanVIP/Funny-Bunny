@@ -5,22 +5,34 @@ using UnityEngine;
 public class GravityBlock : MonoBehaviour
 {
     public float Gravity;
+    [SerializeField] float scaleFactor;
 
     void Start()
     {
         transform.GetChild(0).localRotation = Quaternion.Euler(0, 0, Gravity > 0 ? -90 : 90);
+        transform.GetChild(0).localScale = Vector3.Scale(transform.GetChild(0).localScale, Vector3.one * Mathf.Pow(Mathf.Abs(Gravity), scaleFactor));
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void Update()
     {
-        collision.collider.transform.Rotate(0, 0, collision.rigidbody.gravityScale * collision.rigidbody.gravityScale * Gravity < 0 ? 180 : 0);
+        Collider2D[] colls = Physics2D.OverlapAreaAll(transform.GetChild(1).position, transform.GetChild(2).position);
+        if(colls.Length == 0)
+            return;
 
-        if (!collision.collider.CompareTag("Clone"))
-            collision.rigidbody.gravityScale *= Gravity;
-        else
-            collision.collider.GetComponent<Duplicant>().g *= Gravity;
+        foreach(Collider2D coll in colls)
+        {
+            if (!coll.GetComponent<Rigidbody2D>())
+                continue;
 
-        if (collision.collider.CompareTag("Player"))
-            Destroy(gameObject);
+            coll.transform.Rotate(0, 0, coll.GetComponent<Rigidbody2D>().gravityScale * coll.GetComponent<Rigidbody2D>().gravityScale * Gravity < 0 ? 180 : 0);
+
+            if (!coll.CompareTag("Clone"))
+                coll.GetComponent<Rigidbody2D>().gravityScale *= Gravity;
+            else
+                coll.GetComponent<Duplicant>().g *= Gravity;
+
+            if (coll.CompareTag("Player"))
+                Destroy(gameObject);
+        }
     }
 }

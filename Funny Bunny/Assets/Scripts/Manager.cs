@@ -25,6 +25,7 @@ public class Manager : MonoBehaviour
     float fpsTimer = 0;
     float highestFPS = 0;
     float highestFPSTimer = 0;
+    [HideInInspector] public bool gameStoped = false;
 
     void Start()
     {
@@ -139,6 +140,7 @@ public class Manager : MonoBehaviour
                 break;
 
             case "menu":
+                gameStoped = !gameStoped;
                 StartCoroutine(SetActive(settingsMenu, false, 0.25f, "CanvasGroup", false));
                 if (!MenuG.activeInHierarchy && !gameUI.activeInHierarchy)
                 {

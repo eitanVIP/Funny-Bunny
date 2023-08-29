@@ -14,11 +14,14 @@ public class WipeCannon : MonoBehaviour
         yield return new WaitForSeconds(time);
         time = Random.Range(0.5f, 3f);
 
-        GetComponent<AudioSource>().volume = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>().SFXVolume;
-        GetComponent<AudioSource>().Play();
-        GameObject newWipe = Instantiate(wipePrefab, transform.position, Quaternion.identity);
-        newWipe.GetComponent<Rigidbody2D>().velocity = -transform.right * speed;
-        Destroy(newWipe, 10);
+        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+        {
+            GetComponent<AudioSource>().volume = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>().SFXVolume;
+            GetComponent<AudioSource>().Play();
+            GameObject newWipe = Instantiate(wipePrefab, transform.position, Quaternion.identity);
+            newWipe.GetComponent<Rigidbody2D>().velocity = -transform.right * speed;
+            Destroy(newWipe, 10);
+        }
 
         StartCoroutine(Start());
     }

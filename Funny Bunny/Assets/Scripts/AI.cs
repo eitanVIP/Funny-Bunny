@@ -26,7 +26,8 @@ public class AI : MonoBehaviour
         switch (type)
         {
             case AIType.RightLeft:
-                transform.position += transform.right * Speed * Time.deltaTime;
+                if(!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+                    transform.position += transform.right * Speed * Time.deltaTime;
 
                 RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
                 bool rightHit = false;
