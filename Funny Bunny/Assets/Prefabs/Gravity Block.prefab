@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gravity: -1
   scaleFactor: 0.5
+  affectsPlayer: 1
 --- !u!1 &7054026735072340998
 GameObject:
   m_ObjectHideFlags: 0
