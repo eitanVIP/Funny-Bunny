@@ -7,9 +7,7 @@ public class AI : MonoBehaviour
     public enum AIType
     {
         RightLeft,
-        RightLeftShoot,
-        Smart,
-        SmartShoot
+        Smart
     };
 
     [SerializeField] AIType type;
@@ -26,27 +24,35 @@ public class AI : MonoBehaviour
         switch (type)
         {
             case AIType.RightLeft:
-                if(!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
-                    transform.position += transform.right * Speed * Time.deltaTime;
-
-                RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
-                bool rightHit = false;
-                foreach(var hit in hits)
-                    if (hit.collider.gameObject != gameObject)
-                        rightHit = true;
-
-                RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Vector3.down, downRaycastLength, raycastHitLayer);
-                bool downHit = false;
-                foreach (var hit in hits2)
-                    if (hit.collider.gameObject != gameObject)
-                        downHit = true;
-
-                if (rightHit || (!downHit && downRayFlip))
-                {
-                    renderer.flipY = !renderer.flipY;
-                    transform.Rotate(Vector3.forward * 180);
-                }
+                MoveRightLeft();
                 break;
+
+            case AIType.Smart:
+                break;
+        }
+    }
+
+    void MoveRightLeft()
+    {
+        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+            transform.position += transform.right * Speed * Time.deltaTime;
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
+        bool rightHit = false;
+        foreach (var hit in hits)
+            if (hit.collider.gameObject != gameObject)
+                rightHit = true;
+
+        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Vector3.down, downRaycastLength, raycastHitLayer);
+        bool downHit = false;
+        foreach (var hit in hits2)
+            if (hit.collider.gameObject != gameObject)
+                downHit = true;
+
+        if (rightHit || (!downHit && downRayFlip))
+        {
+            renderer.flipY = !renderer.flipY;
+            transform.Rotate(Vector3.forward * 180);
         }
     }
 

@@ -26,7 +26,7 @@ public class Duplicant : MonoBehaviour
             Destroy(gameObject, 2);
         }
 
-        if (collider.CompareTag("Cabbage"))
+        if (collider.CompareTag("Cabbage") || collider.CompareTag("Bullet"))
             Destroy(gameObject);
 
         if (collider.CompareTag("Wipe"))

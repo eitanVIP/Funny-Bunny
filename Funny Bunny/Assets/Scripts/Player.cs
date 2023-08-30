@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
     {
         if (collider.CompareTag("Finish"))
         {
-            if(PlayerPrefs.GetInt("Level") < SceneManager.GetActiveScene().buildIndex)
+            if (PlayerPrefs.GetInt("Level") < SceneManager.GetActiveScene().buildIndex)
                 PlayerPrefs.SetInt("Level", SceneManager.GetActiveScene().buildIndex);
 
             Destroy(GameObject.Find("dupsHolder"));
@@ -145,8 +145,14 @@ public class Player : MonoBehaviour
             GetComponent<Collider2D>().enabled = false;
             Destroy(gameObject, 0.75f);
         }
-        else if ((collider.CompareTag("Poop Trap") || collider.CompareTag("Wipe")) || collider.CompareTag("Cabbage") && !GameObject.FindWithTag("SceneTransitioner").GetComponent<SceneTransitioner>().isTransitioning)
+        else if ((collider.CompareTag("Poop Trap") || collider.CompareTag("Wipe") || collider.CompareTag("Cabbage") || collider.CompareTag("Bullet")) && !GameObject.FindWithTag("SceneTransitioner").GetComponent<SceneTransitioner>().isTransitioning)
             GameObject.Find("Manager").GetComponent<Manager>().Menu("reset");
+        else if (collider.CompareTag("Tomato"))
+        {
+            collider.GetComponents<AudioSource>()[1].volume = settings.SFXVolume;
+            collider.GetComponents<AudioSource>()[1].Play();
+            Destroy(collider.gameObject, 0.2f);
+        }
     }
 
     void OnDrawGizmos()
