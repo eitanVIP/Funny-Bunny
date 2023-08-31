@@ -18,6 +18,12 @@ public class AI : MonoBehaviour
     [SerializeField] LayerMask raycastHitLayer;
     [SerializeField] SpriteRenderer renderer;
     [SerializeField] bool downRayFlip;
+    Vector2 Down;
+
+    void Start()
+    {
+        Down = -transform.up;
+    }
 
     void Update()
     {
@@ -43,7 +49,7 @@ public class AI : MonoBehaviour
             if (hit.collider.gameObject != gameObject)
                 rightHit = true;
 
-        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Vector3.down, downRaycastLength, raycastHitLayer);
+        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Down, downRaycastLength, raycastHitLayer);
         bool downHit = false;
         foreach (var hit in hits2)
             if (hit.collider.gameObject != gameObject)
@@ -59,6 +65,6 @@ public class AI : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.DrawRay(raycastOrigin.position, transform.right * raycastLength);
-        Gizmos.DrawRay(raycastOrigin.position, Vector3.down * downRaycastLength);
+        Gizmos.DrawRay(raycastOrigin.position, Down * downRaycastLength);
     }
 }
