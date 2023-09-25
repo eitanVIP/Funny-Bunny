@@ -11,7 +11,9 @@ public class AI : MonoBehaviour
     };
 
     [SerializeField] AIType type;
+    [SerializeField] Rigidbody2D rb;
     [SerializeField] float Speed;
+    [SerializeField] float jumpForce;
     [SerializeField] Transform raycastOrigin;
     [SerializeField] float raycastLength;
     [SerializeField] float downRaycastLength;
@@ -34,6 +36,7 @@ public class AI : MonoBehaviour
                 break;
 
             case AIType.Smart:
+                MoveSmartly();
                 break;
         }
     }
@@ -60,6 +63,24 @@ public class AI : MonoBehaviour
             renderer.flipY = !renderer.flipY;
             transform.Rotate(Vector3.forward * 180);
         }
+    }
+
+    void MoveSmartly()
+    {
+        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+            rb.velocityX = transform.right.x * Speed;
+
+        if(GameObject.FindWithTag("Player"))
+            transform.right = ((GameObject.FindWithTag("Player").transform.position.x - transform.position.x) * Vector2.right).normalized;
+
+        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Down, downRaycastLength, raycastHitLayer);
+        bool downHit = false;
+        foreach (var hit in hits2)
+            if (hit.collider.gameObject != gameObject)
+                downHit = true;
+
+        if (downHit && rb.velocityY == 0)
+            rb.AddForceY(jumpForce, ForceMode2D.Impulse);
     }
 
     void OnDrawGizmos()

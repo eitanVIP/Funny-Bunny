@@ -24,14 +24,16 @@ public class SceneTransitioner : MonoBehaviour
         finishAnimation = transform.GetComponentInChildren<Animator>();
         child1 = finishAnimation.transform.GetChild(0).GetComponent<SpriteRenderer>();
         child2 = finishAnimation.transform.GetChild(1).GetComponent<SpriteRenderer>();
-        settings = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>();
+        if (GameObject.FindWithTag("settingsMenu"))
+            settings = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>();
     }
 
     public IEnumerator loadScene(int index=-1, string name="", Canvas canvas=null)
     {
         isTransitioning = true;
 
-        GetComponent<AudioSource>().volume = settings.SFXVolume;
+        if(settings)
+            GetComponent<AudioSource>().volume = settings.SFXVolume;
 
         if (canvas)
             canvas.GetComponent<Canvas>().enabled = false;

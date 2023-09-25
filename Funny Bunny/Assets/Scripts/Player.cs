@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class Player : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        if (GameObject.Find("Movie"))
+            return;
+
         animator = GetComponent<Animator>();
         Joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
         settings = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>();
@@ -35,6 +39,16 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (GameObject.Find("Movie"))
+        {
+            SceneTransitioner transitioner = GameObject.FindWithTag("SceneTransitioner").GetComponent<SceneTransitioner>();
+            VideoPlayer player = GameObject.Find("Movie").GetComponent<VideoPlayer>();
+            if (player.frame + 30 == (long)player.frameCount && !transitioner.isTransitioning)
+                StartCoroutine(transitioner.loadScene(1));//index: SceneManager.GetActiveScene().buildIndex + 1);
+
+            return;
+        }
+
         horizontal = Joystick.Horizontal + Input.GetAxisRaw("Horizontal");
         
         animator.SetBool("Walking", horizontal != 0);
@@ -70,7 +84,10 @@ public class Player : MonoBehaviour
     #region Movement
     void FixedUpdate()
     {
-        if (GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
+        if (GameObject.Find("Movie"))
+            return;
+
+            if (GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         else
             rb.velocity = new Vector2(0, 0);
@@ -145,7 +162,9 @@ public class Player : MonoBehaviour
             GetComponent<Collider2D>().enabled = false;
             Destroy(gameObject, 0.75f);
         }
-        else if ((collider.CompareTag("Poop Trap") || collider.CompareTag("Wipe") || collider.CompareTag("Cabbage") || collider.CompareTag("Bullet")) && !GameObject.FindWithTag("SceneTransitioner").GetComponent<SceneTransitioner>().isTransitioning)
+        else if ((collider.CompareTag("Poop Trap") || collider.CompareTag("Wipe") ||
+            collider.CompareTag("Cabbage") || collider.CompareTag("Bullet") || collider.CompareTag("Cat"))
+            && !GameObject.FindWithTag("SceneTransitioner").GetComponent<SceneTransitioner>().isTransitioning)
             GameObject.Find("Manager").GetComponent<Manager>().Menu("reset");
         else if (collider.CompareTag("Tomato"))
         {
