@@ -38,8 +38,8 @@ public class Manager : MonoBehaviour
 
         if (Application.platform != RuntimePlatform.Android)
         {
-            //gameUI.GetComponent<RectTransform>().anchoredPosition = Vector2.one * 3000;
-            //GameObject.FindWithTag("NonMovableArea").SetActive(false);
+            gameUI.GetComponent<RectTransform>().anchoredPosition = Vector2.one * 3000;
+            GameObject.FindWithTag("NonMovableArea").SetActive(false);
         }
         else
             GameObject.Find("Buttons").SetActive(false);
@@ -51,7 +51,8 @@ public class Manager : MonoBehaviour
     {
         moveTouch();
         fpsText();
-        checkForNonMovableArea();
+        if(GameObject.FindWithTag("NonMovableArea"))
+            checkForNonMovableArea();
 
         if (Input.GetKeyDown(KeyCode.C) && gameUI.activeInHierarchy)
             Duplicate();

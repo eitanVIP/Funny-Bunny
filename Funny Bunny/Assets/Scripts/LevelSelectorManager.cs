@@ -23,6 +23,12 @@ public class LevelSelectorManager : MonoBehaviour
 
     void Start()
     {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            GameObject.Find("Right Arrow").SetActive(false);
+            GameObject.Find("Left Arrow").SetActive(false);
+        }
+
         StartCoroutine(generateButtons());
     }
 
@@ -51,17 +57,12 @@ public class LevelSelectorManager : MonoBehaviour
                 fingerDownPosition = touch.position;
 
                 if (Mathf.Abs(fingerDownPosition.x - fingerUpPosition.x) >= swipeSensitivity && !Swiping)
-                    Swipe();
+                {
+                    float dir = Mathf.Abs(fingerDownPosition.x - fingerUpPosition.x) / (fingerDownPosition.x - fingerUpPosition.x) > 0 ? 1 : -1;
+                    StartCoroutine(ChangePage((int)dir));
+                }
             }
         }
-    }
-
-    void Swipe()
-    {
-        Swiping = true;
-        float dir = Mathf.Abs(fingerDownPosition.x - fingerUpPosition.x) / (fingerDownPosition.x - fingerUpPosition.x) > 0 ? 1 : -1;
-        StartCoroutine(ChangePage((int)dir));
-        Swiping = false;
     }
 
     void generateButton(int maxX, int maxY, int i)
@@ -155,7 +156,6 @@ public class LevelSelectorManager : MonoBehaviour
                 else
                     score += 2;
             }
-
         }
 
         float perfect = SceneManager.sceneCountInBuildSettings - 2;
@@ -205,6 +205,11 @@ public class LevelSelectorManager : MonoBehaviour
 
     IEnumerator ChangePage(int dir)
     {
+        if (Swiping)
+            yield break;
+
+        Swiping = true;
+
         RectTransform Buttons = Canvas.transform.GetChild(0).GetComponent<RectTransform>();
         float start = Buttons.anchoredPosition.x;
         float end = start + (dir > 0 ? screenSize.x : -screenSize.x);
@@ -221,5 +226,7 @@ public class LevelSelectorManager : MonoBehaviour
         }
 
         Buttons.anchoredPosition = Vector2.right * end;
+
+        Swiping = false;
     }
 }

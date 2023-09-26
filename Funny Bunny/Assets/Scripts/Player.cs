@@ -27,7 +27,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         if (GameObject.Find("Movie"))
+        {
+            GameObject.Find("Music2").GetComponent<AudioSource>().volume = 0;
             return;
+        }
 
         animator = GetComponent<Animator>();
         Joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
@@ -44,8 +47,10 @@ public class Player : MonoBehaviour
             SceneTransitioner transitioner = GameObject.FindWithTag("SceneTransitioner").GetComponent<SceneTransitioner>();
             VideoPlayer player = GameObject.Find("Movie").GetComponent<VideoPlayer>();
             if (player.frame + 30 == (long)player.frameCount && !transitioner.isTransitioning)
-                StartCoroutine(transitioner.loadScene(1));//index: SceneManager.GetActiveScene().buildIndex + 1);
-
+            {
+                PlayerPrefs.SetInt("Uses30", 1);
+                StartCoroutine(transitioner.loadScene(index: SceneManager.GetActiveScene().buildIndex + 1));
+            }
             return;
         }
 

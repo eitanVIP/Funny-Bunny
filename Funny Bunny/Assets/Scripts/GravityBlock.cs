@@ -28,8 +28,6 @@ public class GravityBlock : MonoBehaviour
             if (!coll.GetComponent<Rigidbody2D>() || Recently.Contains(coll.gameObject))
                 continue;
 
-            Debug.Log($"Changing gravity of {coll.gameObject.name}");
-
             coll.transform.Rotate(0, 0, coll.GetComponent<Rigidbody2D>().gravityScale * coll.GetComponent<Rigidbody2D>().gravityScale * Gravity < 0 ? 180 : 0);
 
             if (!coll.CompareTag("Clone"))

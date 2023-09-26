@@ -67,11 +67,15 @@ public class AI : MonoBehaviour
 
     void MoveSmartly()
     {
-        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+        float playerPosX = GameObject.FindWithTag("Player").transform.position.x;
+
+        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped && Mathf.Abs(playerPosX - transform.position.x) > 0.25f)
             rb.velocityX = transform.right.x * Speed;
+        else
+            rb.velocityX = 0f;
 
         if(GameObject.FindWithTag("Player"))
-            transform.right = ((GameObject.FindWithTag("Player").transform.position.x - transform.position.x) * Vector2.right).normalized * (rb.gravityScale < 0 ? -1 : 1);
+            transform.right = ((playerPosX - transform.position.x) * Vector2.right).normalized * (rb.gravityScale < 0 ? -1 : 1);
 
         if (rb.gravityScale < 0)
             transform.Rotate(Vector3.forward * 180);
@@ -86,9 +90,25 @@ public class AI : MonoBehaviour
             rb.AddForceY(jumpForce, ForceMode2D.Impulse);
     }
 
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (type != AIType.Smart || !(collider.CompareTag("Player") || collider.CompareTag("Clone")) || GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+            return;
+
+        GetComponent<Animator>().SetTrigger("Attack");
+
+        AudioSource audio = GetComponents<AudioSource>()[Random.Range(0, 2)];
+
+        audio.volume = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>().SFXVolume;
+        audio.Play();
+    }
+
     void OnDrawGizmos()
     {
-        Gizmos.DrawRay(raycastOrigin.position, transform.right * raycastLength);
-        Gizmos.DrawRay(raycastOrigin.position, Down * downRaycastLength);
+        if(type == AIType.RightLeft)
+        {
+            Gizmos.DrawRay(raycastOrigin.position, transform.right * raycastLength);
+            Gizmos.DrawRay(raycastOrigin.position, Down * downRaycastLength);
+        }
     }
 }
