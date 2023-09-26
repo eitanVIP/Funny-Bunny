@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         if (GameObject.Find("Movie"))
             return;
 
-            if (GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
+        if (GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         else
             rb.velocity = new Vector2(0, 0);

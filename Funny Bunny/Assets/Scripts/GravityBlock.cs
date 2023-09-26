@@ -7,6 +7,9 @@ public class GravityBlock : MonoBehaviour
     public float Gravity;
     [SerializeField] float scaleFactor;
     [SerializeField] bool affectsPlayer;
+    [SerializeField] bool affectsCats;
+    List<GameObject> Recently = new List<GameObject>();
+    List<float> recentlyTimer = new List<float>();
 
     void Start()
     {
@@ -22,14 +25,16 @@ public class GravityBlock : MonoBehaviour
 
         foreach(Collider2D coll in colls)
         {
-            if (!coll.GetComponent<Rigidbody2D>())
+            if (!coll.GetComponent<Rigidbody2D>() || Recently.Contains(coll.gameObject))
                 continue;
+
+            Debug.Log($"Changing gravity of {coll.gameObject.name}");
 
             coll.transform.Rotate(0, 0, coll.GetComponent<Rigidbody2D>().gravityScale * coll.GetComponent<Rigidbody2D>().gravityScale * Gravity < 0 ? 180 : 0);
 
             if (!coll.CompareTag("Clone"))
             {
-                if (!coll.CompareTag("Player"))
+                if (!coll.CompareTag("Player") && !coll.CompareTag("Cat"))
                     coll.GetComponent<Rigidbody2D>().gravityScale *= Gravity;
             } 
             else
@@ -40,6 +45,23 @@ public class GravityBlock : MonoBehaviour
                 coll.GetComponent<Rigidbody2D>().gravityScale *= Gravity;
                 Destroy(gameObject);
             }
+
+            if (coll.CompareTag("Cat") && affectsCats)
+                coll.GetComponent<Rigidbody2D>().gravityScale *= Gravity;
+
+            Recently.Add(coll.gameObject);
+            recentlyTimer.Add(1);
         }
+
+        for(int i = 0; i < Recently.Count; i++)
+        {
+            recentlyTimer[i] -= Time.deltaTime;
+
+            if (recentlyTimer[i] <= 0)
+                Recently[i] = null;
+        }
+
+        Recently.RemoveAll(x => x == null);
+        recentlyTimer.RemoveAll(x => x <= 0);
     }
 }

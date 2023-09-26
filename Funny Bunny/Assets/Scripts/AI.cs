@@ -71,15 +71,18 @@ public class AI : MonoBehaviour
             rb.velocityX = transform.right.x * Speed;
 
         if(GameObject.FindWithTag("Player"))
-            transform.right = ((GameObject.FindWithTag("Player").transform.position.x - transform.position.x) * Vector2.right).normalized;
+            transform.right = ((GameObject.FindWithTag("Player").transform.position.x - transform.position.x) * Vector2.right).normalized * (rb.gravityScale < 0 ? -1 : 1);
+
+        if (rb.gravityScale < 0)
+            transform.Rotate(Vector3.forward * 180);
 
         RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Down, downRaycastLength, raycastHitLayer);
         bool downHit = false;
         foreach (var hit in hits2)
             if (hit.collider.gameObject != gameObject)
                 downHit = true;
-
-        if (downHit && rb.velocityY == 0)
+        
+        if (downHit && Mathf.Abs(rb.velocityY) <= 0.1f)
             rb.AddForceY(jumpForce, ForceMode2D.Impulse);
     }
 
