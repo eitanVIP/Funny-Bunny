@@ -36,13 +36,13 @@ public class Manager : MonoBehaviour
         getObjects();
         checkForUseKeys();
 
-        if (Application.platform != RuntimePlatform.Android)
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+            GameObject.Find("Buttons").SetActive(false);
+        else
         {
             gameUI.GetComponent<RectTransform>().anchoredPosition = Vector2.one * 3000;
             GameObject.FindWithTag("NonMovableArea").SetActive(false);
         }
-        else
-            GameObject.Find("Buttons").SetActive(false);
 
         BG.position = Vector3.up * (14.72f - 4 * (SceneManager.GetActiveScene().buildIndex - 2));
     }
@@ -53,7 +53,7 @@ public class Manager : MonoBehaviour
         fpsText();
         if(GameObject.FindWithTag("NonMovableArea"))
             checkForNonMovableArea();
-
+        
         if (Input.GetKeyDown(KeyCode.C) && gameUI.activeInHierarchy)
             Duplicate();
     }
@@ -90,7 +90,7 @@ public class Manager : MonoBehaviour
     {
         if (Input.touchCount > 0)
             Touch.position = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && Application.platform != RuntimePlatform.Android)
             Touch.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 

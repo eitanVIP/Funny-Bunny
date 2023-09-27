@@ -29,6 +29,12 @@ public class AI : MonoBehaviour
 
     void Update()
     {
+        if (GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
         switch (type)
         {
             case AIType.RightLeft:
@@ -43,8 +49,7 @@ public class AI : MonoBehaviour
 
     void MoveRightLeft()
     {
-        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
-            transform.position += transform.right * Speed * Time.deltaTime;
+        rb.velocity = transform.right * Speed;
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
         bool rightHit = false;
@@ -69,10 +74,8 @@ public class AI : MonoBehaviour
     {
         float playerPosX = GameObject.FindWithTag("Player").transform.position.x;
 
-        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped && Mathf.Abs(playerPosX - transform.position.x) > 0.25f)
+        if (Mathf.Abs(playerPosX - transform.position.x) > 0.25f)
             rb.velocityX = transform.right.x * Speed;
-        else
-            rb.velocityX = 0f;
 
         if(GameObject.FindWithTag("Player"))
             transform.right = ((playerPosX - transform.position.x) * Vector2.right).normalized * (rb.gravityScale < 0 ? -1 : 1);

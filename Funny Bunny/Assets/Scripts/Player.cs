@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
             if (player.frame + 30 == (long)player.frameCount && !transitioner.isTransitioning)
             {
                 PlayerPrefs.SetInt("Uses30", 1);
+                PlayerPrefs.SetInt("Level", SceneManager.GetActiveScene().buildIndex);
                 StartCoroutine(transitioner.loadScene(index: SceneManager.GetActiveScene().buildIndex + 1));
             }
             return;
@@ -71,6 +72,13 @@ public class Player : MonoBehaviour
             GameObject.Find("Manager").GetComponent<Manager>().Menu("reset");
         }
 
+        Rainbow();
+
+        GetComponent<AudioSource>().volume = settings.SFXVolume;
+    }
+
+    void Rainbow()
+    {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color.RGBToHSV(sr.color, out float H, out float S, out float V);
 
@@ -82,8 +90,6 @@ public class Player : MonoBehaviour
             sr.color = Color.HSVToRGB(H, S, V);
         else
             sr.color = Color.white;
-
-        GetComponent<AudioSource>().volume = settings.SFXVolume;
     }
 
     #region Movement
@@ -92,7 +98,7 @@ public class Player : MonoBehaviour
         if (GameObject.Find("Movie"))
             return;
 
-        if (GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
+        if (!GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         else
             rb.velocity = new Vector2(0, 0);
@@ -100,14 +106,12 @@ public class Player : MonoBehaviour
 
     public void tryJump()
     {
-        if (IsGrounded())
+        if (IsGrounded() && !GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
             StartCoroutine(Jump());
     }
 
     IEnumerator Jump()
     {
-        if (!GameObject.Find("Manager").GetComponent<Manager>().gameUI.activeInHierarchy)
-            yield break;
         animator.SetTrigger("Jump");
         GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.1f);
@@ -150,6 +154,9 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
+        if (GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+            return;
+
         if (collider.CompareTag("Finish"))
         {
             if (PlayerPrefs.GetInt("Level") < SceneManager.GetActiveScene().buildIndex)

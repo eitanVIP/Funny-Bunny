@@ -36,7 +36,7 @@ public class LevelSelectorManager : MonoBehaviour
     {
         if (Input.touchCount > 0)
             Touch.position = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && Application.platform != RuntimePlatform.Android)
             Touch.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         touchDetection();
