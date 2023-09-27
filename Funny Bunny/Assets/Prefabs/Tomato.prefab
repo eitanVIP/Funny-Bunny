@@ -191,7 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  rb: {fileID: 20867340692636880}
   Speed: 5
+  jumpForce: 0
   raycastOrigin: {fileID: 8698377220655898365}
   raycastLength: 0.125
   downRaycastLength: 1
