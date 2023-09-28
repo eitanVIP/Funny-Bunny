@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6212744404759411936}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Raycast Origin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4500392881628058956}
   - component: {fileID: 8972454440955857360}
   - component: {fileID: 297476632520233633}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Orange Cat
   m_TagString: Cat
   m_Icon: {fileID: 0}
@@ -169,6 +169,7 @@ MonoBehaviour:
     m_Bits: 192
   renderer: {fileID: 5834511324096391194}
   downRayFlip: 1
+  enableSmartAttackTimer: 1
 --- !u!50 &1993827629943284554
 Rigidbody2D:
   serializedVersion: 4

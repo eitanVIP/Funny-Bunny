@@ -20,7 +20,9 @@ public class AI : MonoBehaviour
     [SerializeField] LayerMask raycastHitLayer;
     [SerializeField] SpriteRenderer renderer;
     [SerializeField] bool downRayFlip;
+    [SerializeField] bool enableSmartAttackTimer;
     Vector2 Down;
+    float smartAttackTimer = 0;
 
     void Start()
     {
@@ -29,7 +31,9 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        if (GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
+        smartAttackTimer -= Time.deltaTime;
+
+        if (GameObject.Find("Manager").GetComponent<Manager>().gameStoped || smartAttackTimer > 0)
         {
             rb.velocity = Vector2.zero;
             return;
@@ -72,8 +76,11 @@ public class AI : MonoBehaviour
 
     void MoveSmartly()
     {
+        if (!GameObject.FindWithTag("Player"))
+            return;
+
         float playerPosX = GameObject.FindWithTag("Player").transform.position.x;
-        Debug.Log(Mathf.Abs(playerPosX - transform.position.x));
+
         if (Mathf.Abs(playerPosX - transform.position.x) > 0.25f)
             rb.velocityX = transform.right.x * Speed;
         else
@@ -99,6 +106,9 @@ public class AI : MonoBehaviour
     {
         if (type != AIType.Smart || !(collider.CompareTag("Player") || collider.CompareTag("Clone")) || GameObject.Find("Manager").GetComponent<Manager>().gameStoped)
             return;
+
+        if(enableSmartAttackTimer)
+            smartAttackTimer = 1;
 
         GetComponent<Animator>().SetTrigger("Attack");
 
