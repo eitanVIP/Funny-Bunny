@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 8602047761166635003}
   - component: {fileID: 986599406411057281}
   - component: {fileID: 7007911172800217446}
+  - component: {fileID: 3235332902916400413}
   m_Layer: 7
   m_Name: Tomato
   m_TagString: Tomato
@@ -202,6 +203,7 @@ MonoBehaviour:
     m_Bits: 192
   renderer: {fileID: 6929555120357446144}
   downRayFlip: 1
+  enableSmartAttackTimer: 0
 --- !u!61 &1895333611055912304
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -539,3 +541,57 @@ MonoBehaviour:
   timeRandomness: 1
   minRandomness: -0.25
   maxRandomness: 0.25
+--- !u!114 &3235332902916400413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384162464407816287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: 3
+  m_ComponentVersion: 3
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.10038765, y: -0.1368346, z: 0}
+  - {x: -0.15519083, y: -0.018932808, z: 0}
+  - {x: -0.16218317, y: 0.10317802, z: 0}
+  - {x: -0.058554247, y: 0.16442248, z: 0}
+  - {x: 0.013919471, y: 0.112838045, z: 0}
+  - {x: 0.054147933, y: 0.020098861, z: 0}
+  - {x: 0.15549882, y: 0.013612406, z: 0}
+  - {x: 0.1480859, y: -0.036691844, z: 0}
+  - {x: 0.06712077, y: -0.10800864, z: 0}
+  - {x: 0.011175177, y: -0.15503544, z: 0}
+  m_ShapePathHash: -2084645206
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 0}
+  m_ShadowShape2DProvider:
+    rid: -2
+  m_ShadowCastingSource: 1
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.0033421814, y: 0.004693523, z: 0}
+      m_Extent: {x: 0.15884098, y: 0.15972896, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.06
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0.06
+  m_CastingOption: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
