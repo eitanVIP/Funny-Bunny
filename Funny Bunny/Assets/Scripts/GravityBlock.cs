@@ -28,7 +28,7 @@ public class GravityBlock : MonoBehaviour
             if (!coll.GetComponent<Rigidbody2D>() || Recently.Contains(coll.gameObject))
                 continue;
 
-            if(!(coll.CompareTag("Player") && !affectsPlayer) && !(coll.CompareTag("Cat") && affectsCats))
+            if(!(coll.CompareTag("Player") && !affectsPlayer) && !(coll.CompareTag("Cat") && affectsCats) && !(coll.gameObject.layer == 6))
                 coll.transform.Rotate(0, 0, coll.GetComponent<Rigidbody2D>().gravityScale * coll.GetComponent<Rigidbody2D>().gravityScale * Gravity < 0 ? 180 : 0);
 
             if (!coll.CompareTag("Clone"))

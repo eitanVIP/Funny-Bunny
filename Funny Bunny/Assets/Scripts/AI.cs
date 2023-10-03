@@ -7,13 +7,14 @@ public class AI : MonoBehaviour
     public enum AIType
     {
         RightLeft,
-        Smart
+        Smart,
+        Random
     };
 
     [SerializeField] AIType type;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float Speed;
-    [SerializeField] float jumpForce;
+    [SerializeField] Vector2 jumpForce;
     [SerializeField] Transform raycastOrigin;
     [SerializeField] float raycastLength;
     [SerializeField] float downRaycastLength;
@@ -21,6 +22,7 @@ public class AI : MonoBehaviour
     [SerializeField] SpriteRenderer renderer;
     [SerializeField] bool downRayFlip;
     [SerializeField] bool enableSmartAttackTimer;
+    [SerializeField] GameObject poopPrefab;
     Vector2 Down;
     float smartAttackTimer = 0;
 
@@ -47,6 +49,10 @@ public class AI : MonoBehaviour
 
             case AIType.Smart:
                 MoveSmartly();
+                break;
+
+            case AIType.Random:
+                MoveRandomly();
                 break;
         }
     }
@@ -92,14 +98,50 @@ public class AI : MonoBehaviour
         if (rb.gravityScale < 0)
             transform.Rotate(Vector3.forward * 180);
 
-        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Down, downRaycastLength, raycastHitLayer);
+        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, -transform.up, downRaycastLength, raycastHitLayer);
         bool downHit = false;
         foreach (var hit in hits2)
             if (hit.collider.gameObject != gameObject)
                 downHit = true;
         
         if (downHit && Mathf.Abs(rb.velocityY) <= 0.1f)
-            rb.AddForceY(jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(jumpForce * transform.up, ForceMode2D.Impulse);
+    }
+
+    void MoveRandomly()
+    {
+        if (rb.gravityScale < 0)
+            transform.Rotate(Vector3.forward * 180);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, -transform.up, downRaycastLength, raycastHitLayer);
+        bool downHit = false;
+        foreach (var hit in hits)
+            if (hit.collider.gameObject != gameObject)
+                downHit = true;
+
+        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
+        bool rightHit = false;
+        foreach (var hit in hits2)
+            if (hit.collider.gameObject != gameObject)
+                rightHit = true;
+
+        if (downHit && Mathf.Abs(rb.velocityY) <= 0.1f)
+        {
+            if (rightHit)
+                transform.right = -transform.right;
+
+            Vector2 Jump = jumpForce * new Vector2(transform.right.x, 1);
+            //Vector2 Jump = new Vector2((baseJump.x * transform.right).x, (baseJump.y * transform.up).y);
+            rb.AddForce(Jump, ForceMode2D.Impulse);
+
+            GetComponent<Animator>().SetTrigger("Jump");
+
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.volume = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>().SFXVolume;
+            audio.Play();
+
+            Instantiate(poopPrefab, transform.position - 0.8f * transform.up, Quaternion.identity);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -123,7 +165,7 @@ public class AI : MonoBehaviour
         if(type == AIType.RightLeft)
         {
             Gizmos.DrawRay(raycastOrigin.position, transform.right * raycastLength);
-            Gizmos.DrawRay(raycastOrigin.position, Down * downRaycastLength);
         }
+        Gizmos.DrawRay(raycastOrigin.position, -transform.up * downRaycastLength);
     }
 }
