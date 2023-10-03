@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7379747162900114428}
   - component: {fileID: 2368058232159422601}
   - component: {fileID: 5807252330579383452}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Poop Trap
   m_TagString: Poop Trap
   m_Icon: {fileID: 0}

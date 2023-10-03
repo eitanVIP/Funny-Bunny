@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AI : MonoBehaviour
@@ -61,17 +62,11 @@ public class AI : MonoBehaviour
     {
         rb.velocity = transform.right * Speed;
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
-        bool rightHit = false;
-        foreach (var hit in hits)
-            if (hit.collider.gameObject != gameObject)
-                rightHit = true;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, Down, downRaycastLength, raycastHitLayer);
+        bool downHit = hits.ToList().Where(x => x.collider.gameObject != gameObject).ToArray().Length != 0;
 
-        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, Down, downRaycastLength, raycastHitLayer);
-        bool downHit = false;
-        foreach (var hit in hits2)
-            if (hit.collider.gameObject != gameObject)
-                downHit = true;
+        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
+        bool rightHit = hits2.ToList().Where(x => x.collider.gameObject != gameObject).ToArray().Length != 0;
 
         if (rightHit || (!downHit && downRayFlip))
         {
@@ -98,12 +93,9 @@ public class AI : MonoBehaviour
         if (rb.gravityScale < 0)
             transform.Rotate(Vector3.forward * 180);
 
-        RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, -transform.up, downRaycastLength, raycastHitLayer);
-        bool downHit = false;
-        foreach (var hit in hits2)
-            if (hit.collider.gameObject != gameObject)
-                downHit = true;
-        
+        RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, -transform.up, downRaycastLength, raycastHitLayer);
+        bool downHit = hits.ToList().Where(x => x.collider.gameObject != gameObject).ToArray().Length != 0;
+
         if (downHit && Mathf.Abs(rb.velocityY) <= 0.1f)
             rb.AddForce(jumpForce * transform.up, ForceMode2D.Impulse);
     }
@@ -114,16 +106,10 @@ public class AI : MonoBehaviour
             transform.Rotate(Vector3.forward * 180);
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(raycastOrigin.position, -transform.up, downRaycastLength, raycastHitLayer);
-        bool downHit = false;
-        foreach (var hit in hits)
-            if (hit.collider.gameObject != gameObject)
-                downHit = true;
+        bool downHit = hits.ToList().Where(x => x.collider.gameObject != gameObject).ToArray().Length != 0;
 
         RaycastHit2D[] hits2 = Physics2D.RaycastAll(raycastOrigin.position, transform.right, raycastLength, raycastHitLayer);
-        bool rightHit = false;
-        foreach (var hit in hits2)
-            if (hit.collider.gameObject != gameObject)
-                rightHit = true;
+        bool rightHit = hits2.ToList().Where(x => x.collider.gameObject != gameObject).ToArray().Length != 0;
 
         if (downHit && Mathf.Abs(rb.velocityY) <= 0.1f)
         {
@@ -131,7 +117,6 @@ public class AI : MonoBehaviour
                 transform.right = -transform.right;
 
             Vector2 Jump = jumpForce * new Vector2(transform.right.x, 1);
-            //Vector2 Jump = new Vector2((baseJump.x * transform.right).x, (baseJump.y * transform.up).y);
             rb.AddForce(Jump, ForceMode2D.Impulse);
 
             GetComponent<Animator>().SetTrigger("Jump");
@@ -140,7 +125,12 @@ public class AI : MonoBehaviour
             audio.volume = GameObject.FindWithTag("settingsMenu").GetComponent<settingsMenu>().SFXVolume;
             audio.Play();
 
-            Instantiate(poopPrefab, transform.position - 0.8f * transform.up, Quaternion.identity);
+            Collider2D[] colls = Physics2D.OverlapAreaAll(transform.position + new Vector3(-1, -0.5f), transform.position + new Vector3(1, -1.5f));
+
+            colls = colls.ToList().Where(x => x.gameObject.CompareTag("Poop Trap")).ToArray();
+
+            if (colls.Length == 0)
+                Instantiate(poopPrefab, transform.position - 0.8f * transform.up, Quaternion.identity);
         }
     }
 
@@ -162,10 +152,8 @@ public class AI : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        if(type == AIType.RightLeft)
-        {
-            Gizmos.DrawRay(raycastOrigin.position, transform.right * raycastLength);
-        }
+        Gizmos.DrawRay(raycastOrigin.position, transform.right * raycastLength);
         Gizmos.DrawRay(raycastOrigin.position, -transform.up * downRaycastLength);
+        Gizmos.DrawWireCube(transform.position + new Vector3(0, -1), new Vector3(2, 1));
     }
 }
